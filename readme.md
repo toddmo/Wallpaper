@@ -10,7 +10,7 @@ Have you noticed, with wallpapers or music playlists, the `random` (shuffle) fun
 
 The app forces it to truly shuffle the files and include every wallpaper in each shuffle, not simply let `random` pick the same files over and over. Then it remembers the shuffle across app restarts, and remembers where it was in that shuffle list. It goes thru all the wallpapers, then re-shuffles and repeats, ad infinitum.
 
-It will pick up new files on each cycle, or on the deletion of the playlist file, or on changes to the wallpaper folder. 
+It will reshuffle the playlist on each cycle, or on the deletion of the playlist file, or on changes to the wallpaper folder. 
 
 ## Limitations
 
