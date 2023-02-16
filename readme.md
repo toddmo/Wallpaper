@@ -1,3 +1,5 @@
+# Random Wallpaper Changer
+
 Unfortunately, the `random` function alone doesn't cut it.
 
 I just launched a random wallpaper app that I made based on my hunch, and I can already tell after 60 seconds that mine is truly delivering the randomness, whereas one of the main trusted apps for Ubuntu... `Variety`... totally was not. 

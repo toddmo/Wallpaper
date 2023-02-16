@@ -1,5 +1,5 @@
 {
-  "name": "wallpaper",
+  "name": "random-wallpaper-changer",
   "version": "1.0.0",
   "description": "truly random wallpaper changer",
   "main": "./dist/app.js",
@@ -8,7 +8,5 @@
     "start": "npm run build && node ./dist/src/app.js",
     "start:dev": "ts-node ./src/app.ts"
   },
-  "author": "toddmo",
-  "devDependencies": {},
-  "dependencies": {}
+  "author": "toddmo"
 }
