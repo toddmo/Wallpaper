@@ -87,17 +87,19 @@ export default class WallpaperChanger {
     var result = await this.execute(command)
     return result
   }
+
+
   //#endregion
 
   //#region Private Methods
   private async update() {
     var paper = await this.getWallpaper()
-    var result = await this.setWallpaper(paper)
+    await this.setWallpaper(paper)
     return paper
   }
 
   private async next(): Promise<boolean> {
-    var index = await this.playlist.advance()
+    await this.playlist.advance()
     var wallpaper = await this.getWallpaper()
     return wallpaper !== undefined
   }
@@ -116,7 +118,7 @@ export default class WallpaperChanger {
 
     while (true) {
       await this.play()
-      await this.playlist.setItems(this.playlist.create(await this.getWallPapers()))
+      await this.playlist.shuffle(this.getWallPapers())
     }
   }
   //#endregion

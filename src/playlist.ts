@@ -53,16 +53,17 @@ export default class Playlist {
     this._index = -1
   }
 
-  create(wallPapers: any[]): any[] {
+  async shuffle(wallPapers: Promise<any[]>) {
+    var papers = await wallPapers
     console.log(`${new Date().toISOString()} shuffling`)
     var items = []
-    while (items.length < wallPapers.length) {
-      var randomIndex = Math.floor(Math.random() * wallPapers.length)
-      if (!items.includes(wallPapers[randomIndex])) {
-        items.push(wallPapers[randomIndex])
+    while (items.length < papers.length) {
+      var randomIndex = Math.floor(Math.random() * papers.length)
+      if (!items.includes(papers[randomIndex])) {
+        items.push(papers[randomIndex])
       }
     }
-    return items
+    await this.setItems(items)
   }
 
 }
