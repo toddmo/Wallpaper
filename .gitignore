@@ -1,7 +1,5 @@
 /dist
 /package-lock.json
-/playlist.txt
-/playlistIndex.txt
 playlist.items.txt
 playlist.index.txt
 node_modules
