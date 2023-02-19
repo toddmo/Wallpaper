@@ -4,7 +4,10 @@
     "module": "CommonJS",
     "sourceMap": true,
     "outDir": "dist",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "types": [
+      "node"
+    ]
   },
   "include": [
     "src/**/*.ts"

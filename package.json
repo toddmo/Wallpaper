@@ -9,7 +9,7 @@
     "start:dev": "ts-node ./src/app.ts"
   },
   "author": "toddmo",
-  "dependencies": {
-    "@types/node": "^18.0.0"
+  "devDependencies": {
+    "@types/node": "^18.14.0"
   }
 }
