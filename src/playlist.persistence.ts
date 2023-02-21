@@ -10,20 +10,10 @@ export default class PlaylistPersistence {
       get(target, property) {
         switch (property) {
           case 'items':
-            if (target._items)
-              return target._items
-            else if (existsSync(self._itemsFile))
-              target._items = readFileSync(self._itemsFile).toString().split('\n')
-            else
-              target._items = []
+            target._items = self.read(target, property, [])
             break
           case 'cursor':
-            if (target._cursor > -1)
-              return target._cursor
-            else if (existsSync(self._cursorFile))
-              target._cursor = parseInt(readFileSync(self._cursorFile).toString()) || -1
-            else
-              target._cursor = -1
+            target._cursor = self.read(target, property, -1)
             break
         }
         return target[property]
@@ -31,10 +21,10 @@ export default class PlaylistPersistence {
       set(target, property, newValue, receiver) {
         switch (property) {
           case 'items':
-            writeFileSync(self._itemsFile, newValue.join('\n'))
+            self.write(property, newValue)
             break
           case 'cursor':
-            writeFileSync(self._cursorFile, newValue.toString())
+            self.write(property, newValue)
             break
         }
         target[property] = newValue
@@ -43,10 +33,23 @@ export default class PlaylistPersistence {
     })
 
   }
-  _cursorFile = join(__dirname, '../playlist.cursor.txt')
-  _itemsFile = join(__dirname, '../playlist.items.txt')
 
   instance: Playlist
+
+  _file = join(__dirname, '../playlist.json')
+  read(target: Playlist, property: string, defaultValue: any): any {
+    if (target[property])
+      return target[property]
+    else if (existsSync(this._file))
+      return JSON.parse(readFileSync(this._file).toString())[property]
+    else
+      return defaultValue
+  }
+  write(property: string, value: string) {
+    var persist = JSON.parse(readFileSync(this._file).toString())
+    persist[property] = value
+    writeFileSync(this._file, JSON.stringify(persist, undefined, 2))
+  }
 
 }
 
