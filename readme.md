@@ -14,7 +14,21 @@ It will reshuffle the playlist on each cycle, or on the deletion of the playlist
 
 ## Limitations
 
-It doesn't do multiple or nested folders (yet). It has no user interface. 
+- It doesn't do multiple or nested folders (yet). 
+<pre>
+import glob = require("glob")
+var getDirectories = function (src, callback) {
+  glob(src + '/**/*', callback)
+}
+</pre>
+- It has no user interface. 
+- It doesn't do multiple monitors:
+<pre>
+    // sudo apt - get install flatpak
+    // flatpak remote - add--if-not - exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    // sudo flatpak install flathub org.gabmus.hydrapaper
+    // run the GUI flatpak run org.gabmus.hydrapaper or use the CLI hydrapaper - c path_to_wallpaper1 path_to_wallpaper2 ...
+</pre>
 
 ## Installation
 

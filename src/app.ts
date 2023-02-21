@@ -1,13 +1,12 @@
 import { exec } from "child_process"
-import { watch } from "fs"
-import { opendir } from "fs/promises"
-import { basename, extname, join } from "path"
 import Playlist from "./playlist"
 
-export default class WallpaperChanger {
+export default class App {
 
-  //#region Public Properties
-  private sleep = async () => await new Promise(resolve => setTimeout(resolve, this.intervalMinutes * 60 * 1000))
+  [Symbol.asyncIterator]() {
+    return this
+  }
+
   private _intervalMinutes: number
   get intervalMinutes() {
     return this._intervalMinutes
@@ -21,110 +20,43 @@ export default class WallpaperChanger {
     return this._wallpaperDirectory
   }
   set wallpaperDirectory(value: string) {
-    this._wallpaperDirectory = value
-    watch(this.wallpaperDirectory, (eventType, filename) => {
-      this.setWallPapers(undefined)
-    })
-  }
-  //#endregion
-
-  //#region Private Properties
-  private reconfig = async () => this.config = await this.config
-  private _configFile = '../config.json'
-  private get config(): any {
-    return (async () => {
-      delete require.cache[require.resolve(this._configFile)]
-      return await import(this._configFile)
-    })()
-  }
-  private set config(value: any) {
-    Object.assign(this, value)
-    watch(join(__dirname, this._configFile), (eventType: string, filename: string) => this.reconfig())
-  }
-
-  private _playlist: Playlist
-  private get playlist(): Playlist {
-    if (!this._playlist)
-      this._playlist = new Playlist()
-    return this._playlist
-  }
-
-  private _wallpapers: string[]
-  private async getWallPapers(): Promise<string[]> {
-    if (!this._wallpapers) {
-      var directoryFiles: any[] = []
-      var dir = await opendir(this.wallpaperDirectory)
-      for await (const dirent of dir)
-        directoryFiles.push({
-          name: dirent.name,
-          path: join(this.wallpaperDirectory, dirent.name),
-          base: basename(dirent.name, extname(dirent.name)),
-          extension: extname(dirent.name).substring(1),
-        })
-      this._wallpapers = directoryFiles
-        .filter((o: any) => ['png', 'jpg'].includes(o.extension.toLowerCase()))
-        .map((o: any) => o.path)
+    if (value !== this._wallpaperDirectory) {
+      this._wallpaperDirectory = value
+      this.wallpapers = undefined
     }
+  }
+
+  _wallpapers: string[]
+  get wallpapers(): string[] {
     return this._wallpapers
   }
-  private setWallPapers(value: string[]) {
+  set wallpapers(value: string[]) {
     this._wallpapers = value
   }
 
-  private execute = async (command: string) => await new Promise(resolve => exec(command, resolve))
-  private async getWallpaper(): Promise<string> {
-    var playlist = await this.playlist.getItems()
-    var playlistIndex = await this.playlist.getIndex()
-    return playlist[playlistIndex]
-  }
-  private async setWallpaper(value: string) {
-    // sudo apt - get install flatpak
-    // flatpak remote - add--if-not - exists flathub https://flathub.org/repo/flathub.flatpakrepo
-    // sudo flatpak install flathub org.gabmus.hydrapaper
-    // run the GUI flatpak run org.gabmus.hydrapaper or use the CLI hydrapaper - c path_to_wallpaper1 path_to_wallpaper2 ...
-    var command: string = `gsettings set org.gnome.desktop.background picture-uri file:///${value}`
+  set wallpaper(value: string) {
     console.log(`${new Date().toISOString()} changing wallpaper to: ${value}`)
-    var result = await this.execute(command)
-    return result
+    this.execute(`gsettings set org.gnome.desktop.background picture-uri file:///${value}`)
   }
 
-
-  //#endregion
-
-  //#region Private Methods
-  private async update() {
-    var paper = await this.getWallpaper()
-    await this.setWallpaper(paper)
-    return paper
+  _playlist: Playlist
+  get playlist(): Playlist {
+    return this._playlist
   }
 
-  private async next(): Promise<boolean> {
-    await this.playlist.advance()
-    var wallpaper = await this.getWallpaper()
-    return wallpaper !== undefined
-  }
+  execute = async (command: string) => await new Promise(resolve => exec(command, resolve))
+  sleep = async (minutes: number) => await new Promise(resolve => setTimeout(resolve, minutes * 60 * 1000))
 
-  private async play() {
-    while (await this.next()) {
-      await this.update()
-      await this.sleep()
+  async next() {
+    for await (var wallPaper of this.playlist) {
+      this.wallpaper = wallPaper
+      await this.sleep(this.intervalMinutes)
+    }
+    return {
+      value: this.playlist.shuffle(this.wallpapers),
+      done: false // run forever
     }
   }
-  //#endregion
-
-  //#region Public Methods
-  async run() {
-    await this.reconfig()
-
-    while (true) {
-      await this.play()
-      await this.playlist.shuffle(this.getWallPapers())
-    }
-  }
-  //#endregion
 
 }
 
-
-
-new WallpaperChanger().run()

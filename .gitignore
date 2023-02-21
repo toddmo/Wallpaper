@@ -1,5 +1,5 @@
 /dist
 /package-lock.json
 playlist.items.txt
-playlist.index.txt
 node_modules
+playlist.cursor.txt
