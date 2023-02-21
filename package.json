@@ -1,6 +1,6 @@
 {
   "name": "random-wallpaper-changer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "truly random wallpaper changer",
   "main": "./dist/app.js",
   "scripts": {
