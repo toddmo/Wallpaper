@@ -8,7 +8,11 @@ Have you noticed, with wallpapers or music playlists, the `random` (shuffle) fun
 
 ## Features
 
-The app forces it to truly shuffle the files and include every wallpaper in each shuffle, not simply let `random` pick the same files over and over. Then it remembers the shuffle across app restarts, and remembers where it was in that shuffle list. It goes thru all the wallpapers, then re-shuffles and repeats, ad infinitum.
+ - truly shuffles the files and includes every wallpaper in each round of play, not simply let `random` pick the same files over and over.
+ - remembers the shuffle across app restarts, and remembers where it was in that shuffle list.
+ - goes thru all the wallpapers, then re-shuffles and repeats, ad infinitum.
+ - reshuffles upon image changes within the wallpaper directory
+ - reshuffles when you change the wallpaper directory setting in the `config.json`
 
 It will reshuffle the playlist on each cycle, or on the deletion of the playlist file, or on changes to the wallpaper folder. 
 
