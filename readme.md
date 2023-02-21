@@ -35,7 +35,7 @@ var getDirectories = function (src, callback) {
  1. [Terminal] Install node.js: `sudo apt-get install nodejs`
  1. [Terminal] Create project folder: `mkdir Wallpaper`
  1. [VS Code] Open VS Code
- 1. [VS Code][Welcome] Clone Git repository: [https://github.com/toddmo/Wallpaper][1]
+ 1. [VS Code][Welcome] Clone Git repository: `https://github.com/toddmo/Wallpaper.git`
  1. [VS Code][config.json] Set your settings: `wallpaperDirectory` and `intervalMinutes`
  1. [VS Code][Terminal] Build: `npm run build`
  1. [VS Code][Terminal] Install PM: `sudo npm install -g pm2`
@@ -43,4 +43,4 @@ var getDirectories = function (src, callback) {
  1. [VS Code][Terminal] save changes to pm2: `pm2 save`
 
 
-  [1]: https://github.com/toddmo/Wallpaper
+  
