@@ -31,10 +31,8 @@ export default class Playlist {
 
   shuffle(items: string[]) {
     this.items = items.reduce(
-      ([original, shuffled]) => {
-        shuffled.push(...original.splice(Math.random() * original.length | 0, 1))
-        return [original, shuffled]
-      },
+      ([original, shuffled]) =>
+        [original, [...shuffled, ...original.splice(Math.random() * original.length | 0, 1)]],
       [[...items], []]
     )[1]
     this.cursor = -1
