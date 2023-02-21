@@ -12,7 +12,7 @@ export default class Playlist {
     this._items = value
   }
 
-  _cursor: number = -1
+  _cursor: number
   get cursor() {
     return this._cursor
   }
@@ -36,7 +36,7 @@ export default class Playlist {
         [original, [...shuffled, ...original.splice(Math.random() * original.length | 0, 1)]],
       [[...items], []]
     )[1]
-    this.cursor = -1
+    this.cursor = undefined
     return this.items
   }
 
