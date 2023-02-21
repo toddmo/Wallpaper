@@ -10,7 +10,8 @@
     ]
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "config.json"
   ],
   "exclude": [
     "node_modules"
