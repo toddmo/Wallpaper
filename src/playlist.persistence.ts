@@ -38,14 +38,16 @@ export default class PlaylistPersistence {
 
   _file = join(__dirname, '../playlist.json')
   read(target: Playlist, property: string, defaultValue: any): any {
-    if (target[property])
+    if (target[property] !== undefined)
       return target[property]
     else if (existsSync(this._file))
-      return JSON.parse(readFileSync(this._file).toString())[property]
+      return JSON.parse(readFileSync(this._file).toString())[property] || defaultValue
     else
       return defaultValue
   }
   write(property: string, value: string) {
+    if (!existsSync(this._file))
+      writeFileSync(this._file, JSON.stringify({}, undefined, 2))
     var persist = JSON.parse(readFileSync(this._file).toString())
     persist[property] = value
     writeFileSync(this._file, JSON.stringify(persist, undefined, 2))
