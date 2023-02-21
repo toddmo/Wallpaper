@@ -2,7 +2,7 @@ import { readFileSync, watch, writeFileSync } from "fs"
 import { join } from "path"
 import os = require("os")
 
-import App from "./app"
+import App, { sleep } from "./app"
 
 export default class AppConfiguration {
   constructor(app: App) {
@@ -30,7 +30,10 @@ export default class AppConfiguration {
 
   watchFileSystem() {
     watch(this._configFile, () => {
-      this.applyConfig()
+      (async () => {
+        await sleep(2.0 / 60.0)
+        this.applyConfig()
+      })()
     })
   }
 

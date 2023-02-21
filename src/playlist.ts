@@ -30,13 +30,14 @@ export default class Playlist {
   }
 
   shuffle(items: string[]) {
+    console.log('shuffling...')
     this.items = items.reduce(
       ([original, shuffled]) =>
         [original, [...shuffled, ...original.splice(Math.random() * original.length | 0, 1)]],
       [[...items], []]
     )[1]
     this.cursor = -1
-    return 'shuffling...'
+    return this.items
   }
 
 

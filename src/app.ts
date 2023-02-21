@@ -20,10 +20,12 @@ export default class App {
     return this._wallpaperDirectory
   }
   set wallpaperDirectory(value: string) {
-    if (value !== this._wallpaperDirectory) {
-      this._wallpaperDirectory = value
+    if (this._wallpaperDirectory && value !== this._wallpaperDirectory) {
       this.wallpapers = undefined
+      this._wallpaperDirectory = value
+      this.shuffle()
     }
+    this._wallpaperDirectory = value
   }
 
   _wallpapers: string[]
@@ -45,18 +47,22 @@ export default class App {
   }
 
   execute = async (command: string) => await new Promise(resolve => exec(command, resolve))
-  sleep = async (minutes: number) => await new Promise(resolve => setTimeout(resolve, minutes * 60 * 1000))
+
+  shuffle() {
+    return this.playlist.shuffle(this.wallpapers)
+  }
 
   async next() {
     for await (var wallPaper of this.playlist) {
       this.wallpaper = wallPaper
-      await this.sleep(this.intervalMinutes)
+      await sleep(this.intervalMinutes)
     }
     return {
-      value: this.playlist.shuffle(this.wallpapers),
+      value: this.shuffle(),
       done: false // run forever
     }
   }
 
 }
 
+export const sleep = async (minutes: number) => await new Promise(resolve => setTimeout(resolve, minutes * 60 * 1000))
