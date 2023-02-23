@@ -8,12 +8,14 @@ import PlaylistPersistence from "./playlist.persistence"
 
 export default class AppPersistence {
   constructor(app: App) {
+    this.playlistPersistance = new PlaylistPersistence(new Playlist())
+    var self = this
     this.instance = new Proxy(app, {
       get(target, property) {
         switch (property) {
           case 'playlist':
             if (!target._playlist)
-              target._playlist = new PlaylistPersistence(new Playlist()).instance
+              target._playlist = self.playlistPersistance.instance
 
             break
           case 'wallpapers':
@@ -23,6 +25,15 @@ export default class AppPersistence {
             break
         }
         return target[property]
+      },
+      set(target, property, newValue, receiver) {
+        switch (property) {
+          case 'wallpaperDirectory':
+            self.playlistPersistance.write(property, newValue)
+            break
+        }
+        target[property] = newValue
+        return true
       }
     })
     this.config = new AppConfiguration(this.instance)
@@ -30,6 +41,7 @@ export default class AppPersistence {
   }
 
   instance: App
+  playlistPersistance: PlaylistPersistence
   config: AppConfiguration
 
   watchFileSystem() {

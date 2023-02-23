@@ -38,15 +38,13 @@ export default class App {
 
   set wallpaper(value: string) {
     console.log(`${new Date().toISOString()} changing wallpaper to: ${value}`)
-    this.execute(`gsettings set org.gnome.desktop.background picture-uri file:///${value}`)
+    execute(`gsettings set org.gnome.desktop.background picture-uri file:///${value}`)
   }
 
   _playlist: Playlist
   get playlist(): Playlist {
     return this._playlist
   }
-
-  execute = async (command: string) => await new Promise(resolve => exec(command, resolve))
 
   shuffle() {
     return this.playlist.shuffle(this.wallpapers)
@@ -66,3 +64,4 @@ export default class App {
 }
 
 export const sleep = async (minutes: number) => await new Promise(resolve => setTimeout(resolve, minutes * 60 * 1000))
+export const execute = async (command: string) => await new Promise(resolve => exec(command, resolve))

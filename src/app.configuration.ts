@@ -5,6 +5,7 @@ import os = require("os")
 import App, { sleep } from "./app"
 
 export default class AppConfiguration {
+
   constructor(app: App) {
     this.instance = app
     this.applyConfig()
