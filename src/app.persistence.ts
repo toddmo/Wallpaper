@@ -2,7 +2,7 @@ import { watch } from "fs"
 
 import App from "./app"
 import Configuration from "./configuration"
-import { library } from "./lib"
+import { pictureDirectory } from "./lib"
 import Playlist from "./playlist"
 import PlaylistPersistence from "./playlist.persistence"
 
@@ -18,7 +18,7 @@ export default class AppPersistence {
             self._config.read(property, 1)
             break
           case 'wallpaperDirectory':
-            self._config.read(property, library.imaging.pictureDirectory())
+            self._config.read(property, pictureDirectory())
             break
           case 'playlist':
             if (!target._playlist)

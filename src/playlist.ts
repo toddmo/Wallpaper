@@ -1,4 +1,4 @@
-import { library } from "./lib"
+import { shuffle } from "./lib"
 
 export default class Playlist {
 
@@ -24,11 +24,9 @@ export default class Playlist {
 
   async next() {
     this.cursor++
-    var value = this.items[this.cursor]
-    return {
-      value: value,
-      done: value === undefined
-    }
+    let value = this.items[this.cursor]
+    let done = !value
+    return { value, done }
   }
 
   abort() {
@@ -36,7 +34,7 @@ export default class Playlist {
   }
 
   shuffle(items: string[]) {
-    this.items = library.arrays.shuffle(items)
+    this.items = shuffle(items)
     this.cursor = undefined
     return this.items
   }

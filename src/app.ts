@@ -1,4 +1,4 @@
-import { library } from "./lib"
+import { images, log, never, setWallpaper, sleep } from "./lib"
 import Playlist from "./playlist"
 
 export default class App {
@@ -38,7 +38,7 @@ export default class App {
   }
 
   set wallpaper(value: string) {
-    library.imaging.setWallpaper(value)
+    setWallpaper(value)
   }
 
   _playlist: Playlist
@@ -48,16 +48,16 @@ export default class App {
 
   async next() {
     for await (var wallPaper of this.playlist) {
-      library.system.log(this.wallpaper = wallPaper)
-      await library.timing.sleep(this.intervalMinutes)
+      log(this.wallpaper = wallPaper)
+      await sleep(this.intervalMinutes)
     }
 
     return {
       value: (
-        this.wallpapers = this.wallpapers || await library.imaging.images(this.wallpaperDirectory),
+        this.wallpapers = this.wallpapers || await images(this.wallpaperDirectory),
         `shuffled ${this.wallpapers.length} images`
       ),
-      done: library.timing.never
+      done: never
     }
   }
 

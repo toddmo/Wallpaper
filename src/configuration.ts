@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, watch, writeFileSync } from "fs"
 import { join } from "path"
-import { library } from "./lib"
+import { debounce } from "./lib"
 
 export default class Configuration {
   constructor(target: any, jsonFile: string) {
@@ -11,27 +11,11 @@ export default class Configuration {
   }
   _target: any
   _jsonFile: string
-  _contents: string
-  get contents() {
-    if (!this._contents) {
-      if (existsSync(this._jsonFile))
-        this._contents = readFileSync(this._jsonFile).toString()
-
-    }
-    return this._contents
-  }
-  set contents(value) {
-    this._contents = value
-    this._writing = true
-    writeFileSync(this._jsonFile, this._contents)
-    this._writing = false
-  }
-
   _config: any
   get config(): any {
     if (!this._config) {
-      if (this.contents)
-        this._config = JSON.parse(this.contents)
+      if (existsSync(this._jsonFile))
+        this._config = JSON.parse(readFileSync(this._jsonFile).toString())
       else
         this._config = {}
     }
@@ -39,7 +23,9 @@ export default class Configuration {
   }
   set config(value: any) {
     this._config = value
-    this.contents = JSON.stringify(this.config, undefined, 2)
+    this._writing = true
+    writeFileSync(this._jsonFile, JSON.stringify(this.config, undefined, 2))
+    this._writing = false
   }
 
   read(property: string | symbol, defaultValue: any): any {
@@ -73,7 +59,7 @@ export default class Configuration {
 
   applyFileChanges() {
     if (this._writing) return
-    watch(this._jsonFile, library.timing.debounce(() => this.readAll(), 5 * 1000))
+    watch(this._jsonFile, debounce(() => this.readAll(), 5 * 1000))
   }
 
 
