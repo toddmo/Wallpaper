@@ -1,4 +1,4 @@
-import { exec } from "child_process"
+import { library } from "./lib"
 import Playlist from "./playlist"
 
 export default class App {
@@ -7,7 +7,7 @@ export default class App {
     return this
   }
 
-  private _intervalMinutes: number
+  _intervalMinutes: number
   get intervalMinutes() {
     return this._intervalMinutes
   }
@@ -15,16 +15,13 @@ export default class App {
     this._intervalMinutes = value
   }
 
-  private _wallpaperDirectory: string
+  _wallpaperDirectory: string
   get wallpaperDirectory(): string {
     return this._wallpaperDirectory
   }
   set wallpaperDirectory(value: string) {
-    if (this._wallpaperDirectory && value !== this._wallpaperDirectory) {
+    if (value !== this._wallpaperDirectory)
       this.wallpapers = undefined
-      this._wallpaperDirectory = value
-      this.shuffle()
-    }
     this._wallpaperDirectory = value
   }
 
@@ -34,11 +31,14 @@ export default class App {
   }
   set wallpapers(value: string[]) {
     this._wallpapers = value
+    if (this._wallpapers)
+      this.playlist.shuffle(this.wallpapers)
+    else
+      this.playlist.abort()
   }
 
   set wallpaper(value: string) {
-    console.log(`${new Date().toISOString()} changing wallpaper to: ${value}`)
-    execute(`gsettings set org.gnome.desktop.background picture-uri file:///${value}`)
+    library.imaging.setWallpaper(value)
   }
 
   _playlist: Playlist
@@ -46,22 +46,19 @@ export default class App {
     return this._playlist
   }
 
-  shuffle() {
-    return this.playlist.shuffle(this.wallpapers)
-  }
-
   async next() {
     for await (var wallPaper of this.playlist) {
-      this.wallpaper = wallPaper
-      await sleep(this.intervalMinutes)
+      library.system.log(this.wallpaper = wallPaper)
+      await library.timing.sleep(this.intervalMinutes)
     }
+
     return {
-      value: this.shuffle(),
-      done: false // run forever
+      value: (
+        this.wallpapers = this.wallpapers || await library.imaging.images(this.wallpaperDirectory),
+        `shuffled ${this.wallpapers.length} images`
+      ),
+      done: library.timing.never
     }
   }
 
 }
-
-export const sleep = async (minutes: number) => await new Promise(resolve => setTimeout(resolve, minutes * 60 * 1000))
-export const execute = async (command: string) => await new Promise(resolve => exec(command, resolve))

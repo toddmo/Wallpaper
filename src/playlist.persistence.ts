@@ -1,31 +1,26 @@
-import { existsSync, readFileSync, writeFileSync } from "fs"
-import { join } from "path"
-
+import Configuration from "./configuration"
 import Playlist from "./playlist"
 
 export default class PlaylistPersistence {
+
   constructor(playlist: Playlist) {
+    this._config = new Configuration(playlist, '../playlist.json')
     var self = this
     this.instance = new Proxy(playlist, {
       get(target, property) {
-        switch (property) {
-          case 'items':
-            target._items = self.read(target, property, [])
-            break
-          case 'cursor':
-            target._cursor = self.read(target, property, -1)
-            break
-        }
+        var defaultValue: any = {
+          items: [],
+          cursor: -1
+        }[property]
+        if (defaultValue)
+          self._config.read(property, defaultValue)
         return target[property]
       },
       set(target, property, newValue, receiver) {
         switch (property) {
           case 'items':
-            self.write(property, newValue)
-            break
           case 'cursor':
-            self.write(property, newValue)
-            break
+            self._config.write(property, newValue)
         }
         target[property] = newValue
         return true
@@ -33,25 +28,7 @@ export default class PlaylistPersistence {
     })
 
   }
-
+  private _config: Configuration
   instance: Playlist
-
-  _file = join(__dirname, '../playlist.json')
-  read(target: Playlist, property: string, defaultValue: any): any {
-    if (target[property] !== undefined)
-      return target[property]
-    else if (existsSync(this._file))
-      return JSON.parse(readFileSync(this._file).toString())[property] || defaultValue
-    else
-      return defaultValue
-  }
-  write(property: string, value: string) {
-    if (!existsSync(this._file))
-      writeFileSync(this._file, JSON.stringify({}, undefined, 2))
-    var persist = JSON.parse(readFileSync(this._file).toString())
-    persist[property] = value
-    writeFileSync(this._file, JSON.stringify(persist, undefined, 2))
-  }
-
 }
 

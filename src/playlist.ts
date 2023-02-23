@@ -1,3 +1,5 @@
+import { library } from "./lib"
+
 export default class Playlist {
 
   [Symbol.asyncIterator]() {
@@ -29,13 +31,12 @@ export default class Playlist {
     }
   }
 
+  abort() {
+    this.cursor = -2
+  }
+
   shuffle(items: string[]) {
-    console.log('shuffling...')
-    this.items = items.reduce(
-      ([original, shuffled]) =>
-        [original, [...shuffled, ...original.splice(Math.random() * original.length | 0, 1)]],
-      [[...items], []]
-    )[1]
+    this.items = library.arrays.shuffle(items)
     this.cursor = undefined
     return this.items
   }

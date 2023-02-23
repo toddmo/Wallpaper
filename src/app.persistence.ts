@@ -1,53 +1,42 @@
-import { readdirSync, watch } from "fs"
-import path = require("path")
+import { watch } from "fs"
 
 import App from "./app"
-import AppConfiguration from "./app.configuration"
+import Configuration from "./configuration"
+import { library } from "./lib"
 import Playlist from "./playlist"
 import PlaylistPersistence from "./playlist.persistence"
 
 export default class AppPersistence {
   constructor(app: App) {
+    this._config = new Configuration(app, '../config.json')
     this.playlistPersistance = new PlaylistPersistence(new Playlist())
     var self = this
     this.instance = new Proxy(app, {
       get(target, property) {
         switch (property) {
+          case 'intervalMinutes':
+            self._config.read(property, 1)
+            break
+          case 'wallpaperDirectory':
+            self._config.read(property, library.imaging.pictureDirectory())
+            break
           case 'playlist':
             if (!target._playlist)
               target._playlist = self.playlistPersistance.instance
-
-            break
-          case 'wallpapers':
-            if (!target._wallpapers)
-              target._wallpapers = (readdirSync(target.wallpaperDirectory))
-                .map(o => path.join(target.wallpaperDirectory, o))
             break
         }
         return target[property]
-      },
-      set(target, property, newValue, receiver) {
-        switch (property) {
-          case 'wallpaperDirectory':
-            self.playlistPersistance.write(property, newValue)
-            break
-        }
-        target[property] = newValue
-        return true
       }
     })
-    this.config = new AppConfiguration(this.instance)
     this.watchFileSystem()
   }
 
+  _config: Configuration
   instance: App
   playlistPersistance: PlaylistPersistence
-  config: AppConfiguration
 
   watchFileSystem() {
-    watch(this.instance.wallpaperDirectory, () => {
-      this.instance.wallpapers = undefined
-    })
+    watch(this.instance.wallpaperDirectory, () => this.instance.wallpapers = undefined)
   }
 
 
