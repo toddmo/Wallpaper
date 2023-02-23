@@ -1,4 +1,4 @@
-import { shuffle } from "./lib"
+import { library } from "./lib"
 
 export default class Playlist {
 
@@ -34,7 +34,7 @@ export default class Playlist {
   }
 
   shuffle(items: string[]) {
-    this.items = shuffle(items)
+    this.items = library.arrays.shuffle(items)
     this.cursor = undefined
     return this.items
   }
