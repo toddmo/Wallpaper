@@ -38,15 +38,15 @@ export namespace library {
       jpg: "image/jpeg"
     }
     export const imageMimeTypes = Object.values(imageTypes)
-    export const images = async (directory: string) => await (await readdir(directory))
-      .map(o => path.join(directory, o))
-      .reduce(async (acc, o) => {
-        var previous = await acc
-        var fileMimeType = await library.system.mimeType(o)
-        return [...previous, ...imageMimeTypes.includes(fileMimeType) ? [o] : []]
-      },
-        Promise.resolve([])
-      )
+    export const images = async (directory: string, includeSubdirectories: boolean) =>
+      await (await readdir(directory, { withFileTypes: true }))
+        .reduce(async (_, o) => {
+          var fullPath = path.join(directory, o.name)
+          var fileMimeType = await library.system.mimeType(fullPath)
+          return [...await _, ...includeSubdirectories && o.isDirectory() ? (await images(fullPath, includeSubdirectories)) : imageMimeTypes.includes(fileMimeType) && [fullPath]]
+        },
+          Promise.resolve([])
+        )
     export const pictureDirectory = () => `${os.homedir()}/Pictures`
     export const setWallpaper = (file: string) => library.system.execute(`gsettings set org.gnome.desktop.background picture-uri 'file:///${file}'`)
 

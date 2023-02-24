@@ -24,21 +24,14 @@ export default class Playlist {
 
   async next() {
     this.cursor++
-    let value = this.items[this.cursor]
-    let done = !value
-    return { value, done }
+    return (([v, d = !v]) => ({ value: v, done: d }))([this.items[this.cursor]])
   }
 
-  abort() {
-    this.cursor = -2
-  }
+  abort = () => this.cursor = -2
 
   shuffle(items: string[]) {
-    this.items = library.arrays.shuffle(items)
     this.cursor = undefined
-    return this.items
+    return this.items = library.arrays.shuffle(items)
   }
-
-
 }
 

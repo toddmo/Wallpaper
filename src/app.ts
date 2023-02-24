@@ -25,6 +25,16 @@ export default class App {
     this._wallpaperDirectory = value
   }
 
+  _includeSubdirectories: boolean
+  get includeSubdirectories() {
+    return this._includeSubdirectories
+  }
+  set includeSubdirectories(value: boolean) {
+    if (value !== this._includeSubdirectories)
+      this.wallpapers = undefined
+    this._includeSubdirectories = value
+  }
+
   _wallpapers: string[]
   get wallpapers(): string[] {
     return this._wallpapers
@@ -54,7 +64,7 @@ export default class App {
 
     return {
       value: (
-        this.wallpapers = this.wallpapers || await library.imaging.images(this.wallpaperDirectory),
+        this.wallpapers = this.wallpapers || await library.imaging.images(this.wallpaperDirectory, this.includeSubdirectories),
         `shuffled ${this.wallpapers.length} images`
       ),
       done: library.timing.never

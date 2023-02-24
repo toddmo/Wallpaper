@@ -20,6 +20,9 @@ export default class AppPersistence {
           case 'wallpaperDirectory':
             self._config.read(property, library.imaging.pictureDirectory())
             break
+          case 'includeSubdirectories':
+            self._config.read(property, true)
+            break
           case 'playlist':
             if (!target._playlist)
               target._playlist = self.playlistPersistance.instance

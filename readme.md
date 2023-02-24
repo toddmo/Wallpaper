@@ -13,18 +13,12 @@ Have you noticed, with wallpapers or music playlists, the `random` (shuffle) fun
  - goes thru all the wallpapers, then re-shuffles and repeats, ad infinitum.
  - reshuffles upon image changes within the wallpaper directory
  - reshuffles when you change the wallpaper directory setting in the `config.json`
-
+ - It does nested folders. 
 It will reshuffle the playlist on each cycle, or on the deletion of the playlist file, or on changes to the wallpaper folder. 
 
 ## Limitations
 
-- It doesn't do multiple or nested folders (yet). 
-<pre>
-import glob = require("glob")
-var getDirectories = function (src, callback) {
-  glob(src + '/**/*', callback)
-}
-</pre>
+- It doesn't do multiple folders (yet). 
 - It has no user interface. 
 - It doesn't do multiple monitors:
 <pre>

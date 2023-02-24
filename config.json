@@ -1,4 +1,5 @@
 {
   "wallpaperDirectory": "/home/toddmo/Pictures/desktop",
+  "includeSubdirectories": true,
   "intervalMinutes": 0.1
 }

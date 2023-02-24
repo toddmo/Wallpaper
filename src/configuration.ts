@@ -58,6 +58,7 @@ export default class Configuration {
 
   readAll() {
     this._config = undefined
+    this._contents = undefined
     Object.assign(this._target, this.config)
   }
 
