@@ -68,4 +68,4 @@ Have you noticed, with wallpapers or music playlists, the `random` (shuffle) fun
     pm2 save
     ```
 
-![](<https://placehold.it/150x30/000000/00ff00?text=Installation_Instructions>)
+![](<https://placehold.it/150x40/000000/00ff00?text=Installation_Instructions>)
