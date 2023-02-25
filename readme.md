@@ -30,16 +30,17 @@ Have you noticed, with wallpapers or music playlists, the `random` (shuffle) fun
 
 ## Installation
 
- 1. [Terminal] Install node.js: 
+ - [Terminal] Install node.js: 
  ```
  sudo apt-get install nodejs
- ``` 1. [Terminal] Install VS Code: `sudo apt install code`
- 1. [VS Code] Open VS Code: `code`
- 1. [VS Code][Welcome] Clone Git repository: `https://github.com/toddmo/Wallpaper.git`
- 1. [VS Code][Terminal] Install build dependencies: `npm install`
- 1. [VS Code][Terminal] Build: `npm run build`
- 1. [VS Code][config.json] Set your settings in `./dist/config.json`: `wallpaperDirectory` and `intervalMinutes`
- 1. [VS Code][Terminal] Install PM: `sudo npm install -g pm2`
- 1. [VS Code][Terminal] Add to pm2: `pm2 start ./dist/src/index.js --name "Wallpaper Changer"`
- 1. [VS Code][Terminal] save changes to pm2: `pm2 save`
+ ```
+ - [Terminal] Install VS Code: `sudo apt install code`
+ - [VS Code] Open VS Code: `code`
+ - [VS Code][Welcome] Clone Git repository: `https://github.com/toddmo/Wallpaper.git`
+ - [VS Code][Terminal] Install build dependencies: `npm install`
+ - [VS Code][Terminal] Build: `npm run build`
+ - [VS Code][config.json] Set your settings in `./dist/config.json`: `wallpaperDirectory` and `intervalMinutes`
+ - [VS Code][Terminal] Install PM: `sudo npm install -g pm2`
+ - [VS Code][Terminal] Add to pm2: `pm2 start ./dist/src/index.js --name "Wallpaper Changer"`
+ - [VS Code][Terminal] save changes to pm2: `pm2 save`
 
