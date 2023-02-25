@@ -30,7 +30,7 @@ Have you noticed, with wallpapers or music playlists, the `random` (shuffle) fun
 
 ## Installation
 
- 1. [Terminal] Install node.js: <pre>```
+ 1. [Terminal] Install node.js: <pre> ```
  sudo apt-get install nodejs
  ```
  </pre>
