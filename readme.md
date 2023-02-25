@@ -30,7 +30,7 @@ Have you noticed, with wallpapers or music playlists, the `random` (shuffle) fun
 
 ## Installation
 
- 1. [Terminal] Install node.js: `sudo apt-get install nodejs`
+ 1. [Terminal] Install node.js: ```sudo apt-get install nodejs```
  1. [Terminal] Install VS Code: `sudo apt install code`
  1. [VS Code] Open VS Code: `code`
  1. [VS Code][Welcome] Clone Git repository: `https://github.com/toddmo/Wallpaper.git`
@@ -41,9 +41,3 @@ Have you noticed, with wallpapers or music playlists, the `random` (shuffle) fun
  1. [VS Code][Terminal] Add to pm2: `pm2 start ./dist/src/index.js --name "Wallpaper Changer"`
  1. [VS Code][Terminal] save changes to pm2: `pm2 save`
 
-```
-function test() {
-  console.log("notice the blank line before this function?");
-}
-```
-  
