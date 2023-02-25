@@ -14,7 +14,7 @@ Have you noticed, with wallpapers or music playlists, the `random` (shuffle) fun
  - reshuffles upon image changes within the wallpaper directory
  - reshuffles when you change the wallpaper directory setting in the `config.json`
  - It does nested folders. 
-It will reshuffle the playlist on each cycle, or on the deletion of the playlist file, or on changes to the wallpaper folder. 
+ - It will reshuffle the playlist on each cycle, or on the deletion of the playlist file, or on changes to the wallpaper folder. 
 
 ## Limitations
 
