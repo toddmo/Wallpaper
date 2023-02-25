@@ -31,13 +31,13 @@ Have you noticed, with wallpapers or music playlists, the `random` (shuffle) fun
 ## Installation
 
  - [Terminal] Install node.js: 
- ```
- sudo apt-get install nodejs
- ```
+    ```
+    sudo apt-get install nodejs
+    ```
  - [Terminal] Install VS Code:
- ```
- sudo apt install code
- ```
+    ```
+    sudo apt install code
+    ```
  - [VS Code] Open VS Code: 
  ```
  code
