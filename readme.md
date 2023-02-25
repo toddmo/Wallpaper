@@ -31,9 +31,9 @@ Have you noticed, with wallpapers or music playlists, the `random` (shuffle) fun
 ## Installation
 
  1. [Terminal] Install node.js: 
- <!--```
- sudo apt-get install nodejs
- ```-->
+ > ```
+ > sudo apt-get install nodejs
+ > ```
  1. [Terminal] Install VS Code: `sudo apt install code`
  1. [VS Code] Open VS Code: `code`
  1. [VS Code][Welcome] Clone Git repository: `https://github.com/toddmo/Wallpaper.git`
