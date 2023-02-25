@@ -34,13 +34,37 @@ Have you noticed, with wallpapers or music playlists, the `random` (shuffle) fun
  ```
  sudo apt-get install nodejs
  ```
- - [Terminal] Install VS Code: `sudo apt install code`
- - [VS Code] Open VS Code: `code`
- - [VS Code][Welcome] Clone Git repository: `https://github.com/toddmo/Wallpaper.git`
- - [VS Code][Terminal] Install build dependencies: `npm install`
- - [VS Code][Terminal] Build: `npm run build`
+ - [Terminal] Install VS Code:
+ ```
+ sudo apt install code
+ ```
+ - [VS Code] Open VS Code: 
+ ```
+ code
+ ```
+ - [VS Code][Welcome] Clone Git repository: 
+ ```
+ https://github.com/toddmo/Wallpaper.git
+ ```
+ - [VS Code][Terminal] Install build dependencies: 
+ ```
+ npm install
+ ```
+ - [VS Code][Terminal] Build: 
+ ```
+ npm run build
+ ```
  - [VS Code][config.json] Set your settings in `./dist/config.json`: `wallpaperDirectory` and `intervalMinutes`
- - [VS Code][Terminal] Install PM: `sudo npm install -g pm2`
- - [VS Code][Terminal] Add to pm2: `pm2 start ./dist/src/index.js --name "Wallpaper Changer"`
- - [VS Code][Terminal] save changes to pm2: `pm2 save`
+ - [VS Code][Terminal] Install PM: 
+ ```
+ sudo npm install -g pm2
+ ```
+ - [VS Code][Terminal] Add to pm2: 
+ ```
+ pm2 start ./dist/src/index.js --name "Wallpaper Changer"
+ ```
+ - [VS Code][Terminal] save changes to pm2: 
+ ```
+ pm2 save
+ ```
 
